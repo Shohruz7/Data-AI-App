@@ -10,3 +10,6 @@ venv/
 
 # OS-specific
 .DS_Store
+
+# Ignore the SQLite database
+db.sqlite3

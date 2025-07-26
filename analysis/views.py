@@ -20,7 +20,7 @@ def upload_dataset(request):
             dataset.save()
             # Process the uploaded dataset file
             df = pd.read_csv(dataset.file.path)
-            #preview_dataset = df.head().to_string()
+            preview_dataset = df.head().to_string()
 
             gpt_response = generate_response(df)
             # Generate chart from first numeric column
@@ -46,6 +46,7 @@ def upload_dataset(request):
     else:
         form = DataSetForm()
     return render(request, 'analysis/upload.html', {'form': form})
-
+def home(request):
+    return render(request, 'analysis/home.html')
 
 # Create your views here.
