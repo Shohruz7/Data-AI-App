@@ -1,0 +1,16 @@
+<h2>Preview Dataset</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>File</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ dataset.name }}</td>
+            <td><a href="{% url 'upload' %}">Upload Another</a></td>
+            <td><a href="{{ dataset.file.url }}">{{ dataset.file.name }}</a></td>
+        </tr>
+    </tbody>
+</table>

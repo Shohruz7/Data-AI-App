@@ -1,0 +1,12 @@
+<h2>Dataset Analysis Result</h2>
+<pre>{{ gpt_response }}</pre>
+
+<h3>Dataset Details</h3>
+<pre>{{ preview_data }}</pre>
+
+{% if chart %}
+    <h3>Data Chart</h3>
+    <img src="data:image/png;base64,{{ chart }}" alt="Data Chart">
+{% endif %}
+
+<a href="{% url 'upload' %}">Upload Another Dataset</a>

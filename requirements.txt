@@ -1,0 +1,15 @@
+# Core Framework
+Django==5.0.3
+
+# AI + GPT Integration
+openai==1.30.1
+
+# Data Analysis & Visualization
+pandas==2.2.2
+matplotlib==3.9.0
+
+# Environment Variable Loader
+python-dotenv==1.0.1
+
+# PostgreSQL Database Driver (Heroku-ready)
+psycopg2-binary==2.9.9
