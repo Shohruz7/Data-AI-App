@@ -134,4 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# Redirect to home after login
+#session settings
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 * 20  # 20 years
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True

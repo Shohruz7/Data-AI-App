@@ -13,3 +13,6 @@ venv/
 
 # Ignore the SQLite database
 db.sqlite3
+
+#media files
+media/

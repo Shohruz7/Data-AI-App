@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome</title>
+    <title>Data Upload and Analysis</title>
 </head>
-<body>
-  <h1>Hello! The app is running 🎉</h1>
-    <p>Welcome to the DataAI Analysis App!</p>
-    <p>To get started, you can upload a dataset for analysis.</p>
-    <p>Click the button below to upload your dataset.</p>
-    <a href="{% url 'upload' %}" class="btn btn-primary">Upload Dataset</a>
-    <p>Once uploaded, you can preview and analyze your dataset.</p>
-    <p>Feel free to explore the app and make the most of your data!</p>
-    <p>If you have any questions or need assistance, please refer to the documentation or contact support.</p>
-    <p>Happy analyzing!</p>
-</body>
-</html>
+    <body>
 
+    <!-- Upload form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="upload">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+
+    <!-- Display uploaded datasets -->
+    {% if gpt_response %}
+        <h3>Analysis Results</h3>
+        <pre>{{ gpt_response }}</pre>
+    {% endif %}
+
+    {% if chart %}
+        <h3>Data Chart</h3>
+        <img src="data:image/png;base64,{{ chart }}" alt="Data Chart" class="img-fluid mb-4">
+    {% endif %}
+
+    <hr>
+    <h3>Analysis & Chat History</h3>
+    {% for entry in chat_history %}
+        {% if entry.type == 'analysis' %}
+            <h4>Initial Analysis</h4>
+            <pre>{{ entry.content }}</pre>
+        {% elif entry.type == 'question' %}
+            <h4>You asked:</h4>
+            <p><strong>{{ entry.content }}</strong></p>
+            <h4>Response:</h4>
+            <pre>{{ entry.response }}</pre>
+        {% endif %}
+        <hr>
+    {% endfor %}
+    <!-- Ask GPT form -->
+    {% if question_answer %}
+        <h3>Response</h3>
+        <div class="alert alert-info" role="alert">
+            {{ question_answer }}
+        </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="question">
+        <label for="question">Questions about Dataset:</label>
+        <input type="text" id="question" name="question" class="form-control" required>
+        <button type="submit" class="btn btn-success">Ask</button>
+    </form>
+    </body>
+</html>
