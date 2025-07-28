@@ -5,6 +5,8 @@ from .models import DataSet
 from .forms import DataSetForm
 from.utils import generate_response
 
+import matplotlib
+matplotlib.use('Agg')  # Use a non-interactive backend for matplotlib
 import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -20,7 +22,6 @@ def upload_dataset(request):
             dataset.save()
             # Process the uploaded dataset file
             df = pd.read_csv(dataset.file.path)
-            preview_dataset = df.head().to_string()
 
             gpt_response = generate_response(df)
             # Generate chart from first numeric column
@@ -46,6 +47,7 @@ def upload_dataset(request):
     else:
         form = DataSetForm()
     return render(request, 'analysis/upload.html', {'form': form})
+@login_required
 def home(request):
     return render(request, 'analysis/home.html')
 

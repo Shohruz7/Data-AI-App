@@ -1,12 +1,16 @@
-<h2>Dataset Analysis Result</h2>
-<pre>{{ gpt_response }}</pre>
+<div class="container">
+    <h2 class="mt-4">Dataset Analysis Result</h2>
+    <div class="alert alert-info" role="alert">
+        {{ gpt_response|linebreaks }}
+    </div>
 
-<h3>Dataset Details</h3>
-<pre>{{ preview_data }}</pre>
+    <h3>Dataset Details</h3>
+    <pre class="bg-light p-3 border rounded">{{ preview_data }}</pre>
 
-{% if chart %}
-    <h3>Data Chart</h3>
-    <img src="data:image/png;base64,{{ chart }}" alt="Data Chart">
-{% endif %}
+    {% if chart %}
+        <h3>Data Chart</h3>
+        <img src="data:image/png;base64,{{ chart }}" alt="Data Chart" class="img-fluid mb-4">
+    {% endif %}
 
-<a href="{% url 'upload' %}">Upload Another Dataset</a>
+    <a href="{% url 'upload' %}" class="btn btn-primary">Upload Another Dataset</a>
+</div>

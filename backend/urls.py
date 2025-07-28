@@ -22,8 +22,8 @@ from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
-    path('analysis/', include('analysis.urls')),
+    path('', include('users.urls')),
+    path('', include('analysis.urls')),
     path('', user_views.home, name='home'),  # Redirect to home view
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
