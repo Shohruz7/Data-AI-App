@@ -1,8 +1,17 @@
 {% include 'partials/nav.html' %}
-<div style="max-width: 900px; margin: 20px auto; padding: 16px;">
-  <h2>Account</h2>
-  <p>Welcome, {{ request.user.username }}.</p>
-  <p>Email: {{ request.user.email }}</p>
+<style>
+  body { background: linear-gradient(160deg, #0f172a, #111827); color: #e5e7eb; margin: 0; }
+  .container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+  .card { background: #0b1224; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  h2 { margin: 0 0 12px 0; color: #ffffff; }
+  p { color: #e5e7eb; margin: 0 0 8px 0; }
+</style>
+<div class="container">
+  <div class="card">
+    <h2>Account</h2>
+    <p>Welcome, {{ request.user.username }}.</p>
+    <p>Email: {{ request.user.email }}</p>
+  </div>
 </div>
 
 

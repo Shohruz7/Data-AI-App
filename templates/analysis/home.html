@@ -3,6 +3,8 @@
 <head>
     <title>Data Upload and Analysis</title>
     <style>
+        /* Dark navy theme */
+        body { background: linear-gradient(160deg, #0f172a, #111827); color: #e5e7eb; }
         .btn {
             padding: 8px 16px;
             margin: 5px;
@@ -12,51 +14,57 @@
             text-decoration: none;
             display: inline-block;
         }
-        .btn-primary { background-color: #007bff; color: white; }
-        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-primary { background-color: #2563eb; color: white; }
+        .btn-primary:hover { background-color: #1d4ed8; }
+        .btn-secondary { background-color: #1f2937; color: #e5e7eb; }
+        .btn-secondary:hover { background-color: #374151; }
         .btn-success { background-color: #28a745; color: white; }
         .form-control {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
-            border: 1px solid #ddd;
+            border: 1px solid #334155;
             border-radius: 4px;
             box-sizing: border-box;
+            background: #0b1224;
+            color: #e5e7eb;
         }
         .alert { padding: 12px; margin: 10px 0; border-radius: 4px; }
         .loading { opacity: 0.6; pointer-events: none; }
-        .error { color: #dc3545; }
-        .success { color: #28a745; }
+        .error { color: #fca5a5; }
+        .success { color: #86efac; }
         /* Layout */
         .layout { display: flex; align-items: stretch; height: calc(100vh - 52px); }
-        .sidebar { width: 260px; min-width: 260px; background: #f8fafc; border-right: 1px solid #e5e7eb; height: 100%; position: sticky; top: 52px; overflow-y: auto; }
-        .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #e5e7eb; }
+        .sidebar { width: 260px; min-width: 260px; background: #0b1224; border-right: 1px solid #1f2937; height: 100%; position: sticky; top: 52px; overflow-y: auto; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #1f2937; color: #e5e7eb; }
         .sidebar-title { font-weight: 600; }
         .chat-list { list-style: none; margin: 0; padding: 0; }
-        .chat-list-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #eef2f7; position: relative; }
-        .chat-list-item:hover { background: #eef2f7; }
-        .chat-list-item.active { background: #e2e8f0; font-weight: 600; }
+        .chat-list-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #1f2937; position: relative; color: #e5e7eb; }
+        .chat-list-item:hover { background: #111827; }
+        .chat-list-item.active { background: #1f2937; font-weight: 600; }
         .kebab { position: absolute; right: 8px; top: 8px; display: none; }
         .chat-list-item:hover .kebab { display: inline-block; }
-        .kebab-btn { background: transparent; border: none; cursor: pointer; font-size: 16px; padding: 2px 6px; }
-        .kebab-menu { position: absolute; right: 8px; top: 28px; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: none; z-index: 10; }
-        .kebab-menu button { display: block; width: 140px; text-align: left; background: none; border: none; padding: 8px 10px; cursor: pointer; }
-        .kebab-menu button:hover { background: #f3f4f6; }
-        .saved-badge { font-size: 11px; color: #059669; margin-left: 6px; }
+        .kebab-btn { background: transparent; color: #e5e7eb; border: none; cursor: pointer; font-size: 16px; padding: 2px 6px; }
+        .kebab-menu { position: absolute; right: 8px; top: 28px; background: #111827; color: #e5e7eb; border: 1px solid #1f2937; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: none; z-index: 10; }
+        .kebab-menu button { display: block; width: 140px; text-align: left; background: none; color: #e5e7eb; border: none; padding: 8px 10px; cursor: pointer; }
+        .kebab-menu button:hover { background: #1f2937; }
+        .saved-badge { font-size: 11px; color: #34d399; margin-left: 6px; }
         /* Chat area */
         .chat { flex: 1; display: flex; flex-direction: column; height: 100%; }
-        .messages { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px; background: #ffffff; }
-        .message { margin-bottom: 16px; }
-        .message h4 { margin: 0 0 6px 0; }
-        .composer { border-top: 1px solid #e5e7eb; padding: 12px; background: #fafafa; }
+        .messages { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px; background: #0f172a; position: relative; }
+        .message { margin-bottom: 16px; color: #e5e7eb; }
+        .message h4 { margin: 0 0 6px 0; color: #ffffff; }
+        .composer { border-top: 1px solid #1f2937; padding: 12px; background: #0b1224; }
         .composer form { display: flex; gap: 8px; align-items: center; }
         .composer .form-control { flex: 1; margin: 0; }
         .upload-form { margin-bottom: 8px; }
-        .chart-img { max-width: 100%; height: auto; border: 1px solid #e5e7eb; border-radius: 4px; }
+        .chart-img { max-width: 100%; height: auto; border: 1px solid #1f2937; border-radius: 4px; background: #0b1224; }
         /* Prevent text clipping on narrow screens */
         .message, .messages pre, .messages p { word-wrap: break-word; overflow-wrap: anywhere; word-break: break-word; }
-        .messages pre { white-space: pre-wrap; }
+        .messages pre { white-space: pre-wrap; color: #e5e7eb; }
         .chat-list-item .title { display: inline-block; white-space: normal; overflow-wrap: anywhere; word-break: break-word; padding-right: 28px; }
+        /* Empty state placeholder */
+        .placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #94a3b8; opacity: 0.7; font-size: 18px; }
 
         .mobile-only { display: none; }
         .backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 900; }
@@ -66,7 +74,7 @@
         @media (max-width: 900px) {
             .layout { flex-direction: column; height: auto; }
             /* Sidebar becomes off-canvas */
-            .sidebar { position: fixed; left: 0; top: 52px; height: calc(100vh - 52px); max-height: none; width: 80%; max-width: 320px; transform: translateX(-100%); transition: transform 200ms ease; z-index: 1000; border-right: 1px solid #e5e7eb; }
+            .sidebar { position: fixed; left: 0; top: 52px; height: calc(100vh - 52px); max-height: none; width: 80%; max-width: 320px; transform: translateX(-100%); transition: transform 200ms ease; z-index: 1000; border-right: 1px solid #1f2937; }
             .sidebar.open { transform: translateX(0%); }
             .chat { min-height: 60vh; }
             .messages { max-height: 55vh; }
@@ -231,6 +239,7 @@
                 container.appendChild(div);
             });
             scrollMessagesToBottom();
+            ensurePlaceholder();
         }
 
         function scrollMessagesToBottom() {
@@ -285,6 +294,10 @@
 
         // Switch Chat (event delegation)
         document.getElementById('chat-list').addEventListener('click', function(e) {
+            // Ignore clicks within kebab/menu areas to avoid switching chats
+            if (e.target.closest('.kebab') || e.target.closest('.kebab-menu') || e.target.closest('.kebab-btn') || e.target.closest('.save-chat') || e.target.closest('.delete-chat')) {
+                return;
+            }
             const li = e.target.closest('.chat-list-item');
             if (!li) return;
             const chatId = li.dataset.chatId;
@@ -351,6 +364,7 @@
                     `;
                     messages.appendChild(div);
                     scrollMessagesToBottom();
+                    ensurePlaceholder();
 
                     // Update chat list (AI title)
                     if (data.chats) {
@@ -405,15 +419,17 @@
                         <p><strong>${question}</strong></p>
                         <h4>Response:</h4>
                         <pre>${data.question_answer}</pre>
+                        ${data.chart ? `<img class=\"chart-img\" src=\"data:image/png;base64,${data.chart}\" alt=\"Chart\" />` : ''}
                         <hr>
                     `;
                     messages.appendChild(div);
                     scrollMessagesToBottom();
-
+                    ensurePlaceholder();
+                    
                     // Reset form
                     document.getElementById('question').value = '';
                 } else {
-                    questionStatus.innerHTML = '<p class="error">Failed to get answer: ' + data.error + '</p>';
+                    questionStatus.innerHTML = '<p class="error">Failed to get answer: ' + (data.error || 'Unknown error') + '</p>';
                 }
             })
             .catch(error => {
@@ -462,6 +478,7 @@
                         `;
                         messages.appendChild(div);
                         scrollMessagesToBottom();
+                        ensurePlaceholder();
                         if (data.chats) {
                             renderChatList(data.chats, data.active_chat_id);
                         }
@@ -511,6 +528,7 @@
                         `;
                         messages.appendChild(div);
                         scrollMessagesToBottom();
+                        ensurePlaceholder();
                         questionInput.value = '';
                     } else {
                         questionStatus.innerHTML = '<p class="error">Failed to get answer: ' + (data.error || 'Unknown error') + '</p>';
@@ -616,6 +634,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('messages');
             container.scrollTop = container.scrollHeight;
+            ensurePlaceholder();
         });
 
         // Trigger file picker
@@ -629,6 +648,47 @@
                 const uploadStatus = document.getElementById('upload-status');
                 if (name) uploadStatus.innerHTML = '<p class="success">Selected: ' + name + '</p>';
             });
+        }
+
+        // Empty chat phrases
+        const EMPTY_PHRASES = [
+            "No data yet—upload a dataset to get started.",
+            "Your insights will appear here.",
+            "Data goes in, answers come out.",
+            "Waiting for your first dataset…",
+            "No patterns yet—let’s crunch some numbers.",
+            "Analysis starts with data—feed me some!",
+            "This space will fill with insights soon.",
+            "Upload data, unlock trends.",
+            "Where raw numbers turn into knowledge.",
+            "No anomalies detected (yet).",
+            "Your analysis journey starts here.",
+            "Nothing to visualize—bring the charts alive!",
+            "Ready to explore your data?",
+            "Upload, analyze, discover.",
+            "Numbers tell stories—let’s find yours.",
+            "Empty table today, full of insights tomorrow.",
+            "No queries yet—ask me something.",
+            "Patterns are waiting to be uncovered.",
+            "This space will soon turn into dashboards.",
+            "Data in sight? Insights in mind."
+        ];
+
+        function ensurePlaceholder() {
+            const container = document.getElementById('messages');
+            const hasMessages = !!container.querySelector('.message');
+            let ph = document.getElementById('empty-placeholder');
+            if (!hasMessages) {
+                if (!ph) {
+                    ph = document.createElement('div');
+                    ph.id = 'empty-placeholder';
+                    ph.className = 'placeholder';
+                    ph.textContent = EMPTY_PHRASES[Math.floor(Math.random() * EMPTY_PHRASES.length)];
+                    container.appendChild(ph);
+                }
+            } else {
+                if (ph) ph.remove();
+            }
         }
     </script>
 </body>
