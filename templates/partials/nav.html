@@ -1,0 +1,19 @@
+<style>
+  .top-nav { position: sticky; top: 0; z-index: 1000; background: #0f172a; color: #fff; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .top-nav .brand { font-weight: 700; font-size: 18px; margin-right: 24px; color: #fff; text-decoration: none; }
+  .top-nav .links { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .top-nav .links a { color: #e2e8f0; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+  .top-nav .links a:hover { background: #1f2937; color: #fff; }
+  .top-nav .spacer { flex: 1; }
+</style>
+<nav class="top-nav">
+  <a class="brand" href="{% url 'analysis-home' %}">DataAI</a>
+  <div class="links">
+    <a href="{% url 'account' %}">Account</a>
+    <a href="{% url 'demo' %}">Demo</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+</nav>
+
+

@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>User Registration</title>
+  <title>Create Account</title>
+  <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
-  <h1>Create a New Account</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
-  <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+  <div class="container">
+    <div class="header">
+      <h1>DataAI</h1>
+    </div>
+    <div class="card">
+      <div class="title">Create account</div>
+      <div class="subtitle">Join to explore and analyze your datasets</div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="field">
+          <label for="id_username">Username</label>
+          {{ form.username }}
+        </div>
+        <div class="field">
+          <label for="id_email">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="field">
+          <label for="id_password1">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div class="field">
+          <label for="id_password2">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Register</button>
+          <a class="link" href="{% url 'login' %}">Already have an account?</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

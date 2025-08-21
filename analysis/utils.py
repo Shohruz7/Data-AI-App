@@ -3,6 +3,7 @@ import os
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 def generate_response(df):
     prompt = f"""You're a data analyst. Analyze the following dataset and provide insights and and identify any patterns, trends, or anomalies. Suggest visualizations that would help understand the data.
 
@@ -22,6 +23,7 @@ User will ask questions based on this analysis later or ask for more visualizati
         temperature=0.7,
     )
     return response.choices[0].message.content
+
 def answer_question(question, df):
     prompt = f"""
 You are a data analyst. Use the dataset below to answer the user's question.
@@ -43,3 +45,31 @@ Provide a concise and clear answer using the data above. Suggest visualizations 
         temperature=0.7,
     )
     return response.choices[0].message.content
+
+def generate_chat_title(df, filename: str) -> str:
+    sample = df.head().to_string(index=False)
+    prompt = f"""
+You are to craft a very short, descriptive chat title (max 6 words) for a data analysis session.
+Use the provided file name and dataset preview to infer the theme.
+- Output ONLY the title text, no quotes, no punctuation at the end, no markdown.
+
+File name: {filename}
+Dataset preview (first 5 rows):
+{sample}
+"""
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You generate concise, meaningful titles."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=30,
+            temperature=0.4,
+        )
+        title = response.choices[0].message.content.strip()
+        # Basic cleanup
+        title = title.strip('"\' ').rstrip('.!?:;')
+        return title if title else (filename or "Untitled Chat")
+    except Exception:
+        return filename or "Untitled Chat"

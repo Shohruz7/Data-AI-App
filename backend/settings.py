@@ -138,3 +138,10 @@ AUTH_USER_MODEL = 'users.CustomUser'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 * 20  # 20 years
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
+
+# After a successful login, go here (use your URL name)
+LOGIN_REDIRECT_URL = "analysis-home"          # or "analysis-home"
+
+# Nice to set these too:
+LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = "home"

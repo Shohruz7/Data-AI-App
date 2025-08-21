@@ -1,7 +1,8 @@
 {% include 'partials/nav.html' %}
 <div style="max-width: 900px; margin: 20px auto; padding: 16px;">
-  <h2>Demo</h2>
-  <p>This is a placeholder demo page. Add your demo content here.</p>
+  <h2>Account</h2>
+  <p>Welcome, {{ request.user.username }}.</p>
+  <p>Email: {{ request.user.email }}</p>
 </div>
 
 

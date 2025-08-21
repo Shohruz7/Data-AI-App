@@ -2,14 +2,21 @@
 <html>
 <head>
   <title>Welcome</title>
+  <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
-    <h1>Welcome to the Data Analysis App</h1>
-    <p>This app allows you to upload datasets, analyze them, and visualize the results.</p>
-    <p>To get started, please register for an account or login if you already have one.</p>
-    <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
-    <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
-    <p>If you have any questions, please contact our support team.</p>
-    <p>Happy analyzing!</p>
+  <div class="container">
+    <div class="header">
+      <h1>DataAI</h1>
+    </div>
+    <div class="card">
+      <div class="title center">Welcome to DataAI</div>
+      <p class="subtitle center">Upload CSV files, get instant analysis, and ask questions about your data.</p>
+      <div class="actions center" style="justify-content:center;">
+        <a href="{% url 'register' %}" class="btn btn-primary">Get started</a>
+        <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
