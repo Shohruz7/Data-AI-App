@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Data Analysis AI Web Application
 
 A production-ready, AI-powered data analysis web application built with Django that provides intelligent insights, dynamic chart generation, and secure file processing capabilities.
@@ -346,3 +347,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **Built with ❤️ by [Your Name]**
 
 *This project demonstrates advanced web development skills, AI integration, security best practices, and production deployment expertise.*
+=======
+
+>>>>>>> refs/remotes/origin/main
