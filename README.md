@@ -344,7 +344,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Built with ❤️ by [Your Name]**
+**Built with ❤️ by Shohruzbek **
 
 *This project demonstrates advanced web development skills, AI integration, security best practices, and production deployment expertise.*
 =======
