@@ -54,8 +54,7 @@ def logout_view(request):
 def account(request):
     return render(request, 'users/account.html')
 
-def demo(request):
-    return render(request, 'demo.html')
+
 
 def contact(request):
     return render(request, 'contact.html')    

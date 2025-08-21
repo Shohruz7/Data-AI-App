@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 from .models import DataSet, Chat, ChatMessage
 from .forms import DataSetForm
@@ -17,6 +18,9 @@ import base64
 import json
 from datetime import datetime
 from copy import deepcopy
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def _maybe_migrate_session_chats(request):
@@ -111,6 +115,7 @@ def home(request):
     form = DataSetForm()
 
     if request.method == 'POST':
+        form = DataSetForm(request.POST, request.FILES)
         form_type = request.POST.get('form_type')
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
@@ -208,9 +213,105 @@ def home(request):
         # Upload handler (operate on active chat)
         if form_type == 'upload':
             active_chat = _get_active_chat(request)
-            form = DataSetForm(request.POST, request.FILES)
             if form.is_valid() and active_chat is not None:
                 try:
+                    # Comprehensive CSV validation
+                    uploaded_file = request.FILES['file']
+                    
+                    # Check file extension
+                    if not uploaded_file.name.lower().endswith('.csv'):
+                        if is_ajax:
+                            return JsonResponse({
+                                'success': False,
+                                'error': 'Please upload a valid CSV file. Only .csv files are allowed.'
+                            })
+                        messages.error(request, 'Please upload a valid CSV file. Only .csv files are allowed.')
+                        return redirect('home')
+                    
+                    # Check file size (limit to 10MB)
+                    if uploaded_file.size > 10 * 1024 * 1024:
+                        if is_ajax:
+                            return JsonResponse({
+                                'success': False,
+                                'error': 'File size must be less than 10MB. Your file is {:.1f}MB.'.format(uploaded_file.size / (1024 * 1024))
+                            })
+                        messages.error(request, f'File size must be less than 10MB. Your file is {uploaded_file.size / (1024 * 1024):.1f}MB.')
+                        return redirect('home')
+                    
+                    # Check if file is empty
+                    if uploaded_file.size == 0:
+                        if is_ajax:
+                            return JsonResponse({
+                                'success': False,
+                                'error': 'The uploaded file is empty. Please upload a file with data.'
+                            })
+                        messages.error(request, 'The uploaded file is empty. Please upload a file with data.')
+                        return redirect('home')
+                    
+                    # Try to read CSV to validate content
+                    try:
+                        df = pd.read_csv(uploaded_file)
+                        if df.empty:
+                            if is_ajax:
+                                return JsonResponse({
+                                    'success': False,
+                                    'error': 'CSV file appears to be empty or contains no data rows.'
+                                })
+                            messages.error(request, 'CSV file appears to be empty or contains no data rows.')
+                            return redirect('home')
+                        
+                        # Check if dataframe has reasonable dimensions
+                        if df.shape[0] > 100000:
+                            if is_ajax:
+                                return JsonResponse({
+                                    'success': False,
+                                    'error': 'CSV file has too many rows ({:,}). Please upload a file with fewer than 100,000 rows.'.format(df.shape[0])
+                                })
+                            messages.error(request, f'CSV file has too many rows ({df.shape[0]:,}). Please upload a file with fewer than 100,000 rows.')
+                            return redirect('home')
+                            
+                        if df.shape[1] > 100:
+                            if is_ajax:
+                                return JsonResponse({
+                                    'success': False,
+                                    'error': 'CSV file has too many columns ({:,}). Please upload a file with fewer than 100 columns.'.format(df.shape[1])
+                                })
+                            messages.error(request, f'CSV file has too many columns ({df.shape[1]:,}). Please upload a file with fewer than 100 columns.')
+                            return redirect('home')
+                        
+                        # Check for required data types (at least some numeric columns)
+                        numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+                        if len(numeric_cols) == 0:
+                            if is_ajax:
+                                return JsonResponse({
+                                    'success': False,
+                                    'error': 'CSV file must contain at least some numeric data for analysis. Please upload a file with numeric columns.'
+                                })
+                            messages.error(request, 'CSV file must contain at least some numeric data for analysis. Please upload a file with numeric columns.')
+                            return redirect('home')
+                            
+                    except UnicodeDecodeError:
+                        if is_ajax:
+                            return JsonResponse({
+                                'success': False,
+                                'error': 'CSV file encoding error. Please ensure the file is saved with UTF-8 encoding.'
+                            })
+                        messages.error(request, 'CSV file encoding error. Please ensure the file is saved with UTF-8 encoding.')
+                        return redirect('home')
+                        
+                    except Exception as e:
+                        if is_ajax:
+                            return JsonResponse({
+                                'success': False,
+                                'error': f'Error reading CSV file: {str(e)}. Please ensure the file is a valid CSV format.'
+                            })
+                        messages.error(request, f'Error reading CSV file: {str(e)}. Please ensure the file is a valid CSV format.')
+                        return redirect('home')
+                    
+                    # Reset file pointer for processing
+                    uploaded_file.seek(0)
+                    
+                    # Create dataset
                     dataset = form.save(commit=False)
                     dataset.user = request.user
                     # Set dataset name from filename (without path)
@@ -219,11 +320,14 @@ def home(request):
                     except Exception:
                         pass
                     dataset.save()
+                    
+                    # Analyze data
                     df = pd.read_csv(dataset.file.path)
                     active_chat.last_dataset = dataset
                     active_chat.save(update_fields=['last_dataset', 'updated_at'])
                     gpt_response = generate_response(df)
 
+                    # Generate chart
                     numeric_cols = df.select_dtypes(include=['number']).columns
                     if len(numeric_cols) > 0:
                         plt.figure(figsize=(10, 6))
@@ -236,6 +340,10 @@ def home(request):
                         buffer.close()
                         chart = base64.b64encode(image_png).decode('utf-8')
                         plt.close()
+                    else:
+                        chart = None
+                        
+                    # Save analysis message
                     ChatMessage.objects.create(
                         chat=active_chat,
                         type='analysis',
@@ -267,9 +375,13 @@ def home(request):
                             'active_chat_id': active_chat.id,
                             'chats': chats_min,
                         })
+
                 except Exception as e:
+                    logger.error(f"Error processing upload: {str(e)}")
                     if is_ajax:
                         return JsonResponse({'success': False, 'error': str(e)})
+                    messages.error(request, f'An error occurred while processing your file: {str(e)}')
+                    return redirect('home')
 
         # Question handler (operate on active chat)
         if form_type == 'question':
@@ -372,7 +484,7 @@ def home(request):
     ]
 
     return render(request, 'analysis/home.html', {
-        'form': form,
+        'form': DataSetForm(),
         'gpt_response': gpt_response,
         'chart': chart,
         'question_answer': question_answer,
