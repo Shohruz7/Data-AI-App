@@ -216,7 +216,7 @@ python manage.py test
 python manage.py collectstatic --noinput
 ```
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 dataai/
@@ -245,7 +245,7 @@ dataai/
 └── manage.py                # Django management script
 ```
 
-## 🔒 Security Features
+## 🔒 Security 
 
 ### **File Upload Security**
 - **Type Validation**: Strict CSV file type checking
@@ -265,7 +265,7 @@ dataai/
 - **Secure Storage**: Encrypted file storage and database
 - **Audit Logging**: Comprehensive logging for security monitoring
 
-## 📊 Performance Features
+## 📊 Performance 
 
 ### **Static File Optimization**
 - **Whitenoise**: Efficient static file serving
@@ -279,7 +279,7 @@ dataai/
 - **Indexing**: Strategic database indexing
 - **Migration Management**: Smooth database schema updates
 
-## 🚀 API Integration
+## 🚀 API 
 
 ### **OpenAI Integration**
 - **GPT-3.5-turbo**: Advanced language model for analysis
@@ -293,10 +293,7 @@ dataai/
 - **Customization**: Configurable chart parameters
 - **Export Options**: Chart export capabilities
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
+If you would like to contribute!
 1. **Fork the repository**
 2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
 3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
@@ -309,24 +306,18 @@ We welcome contributions! Please follow these steps:
 - Update documentation for any changes
 - Ensure all tests pass before submitting
 
-## 📝 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
+## 🙏 Big thanks
 
 - **OpenAI** for providing the GPT-3.5-turbo API
 - **Django** community for the excellent web framework
 - **Heroku** for the deployment platform
-- **Contributors** who have helped improve this project
 
 ## 📞 Support & Contact
 
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/data-analysis-ai/issues)
+- **GitHub Issues**: [Create an issue](https://github.com/shohruz7/data-ai-app/issues)
 - **Email**: shohruzbek.abdumuminov19@gmail.com
-- **Documentation**: [Full Documentation](https://your-docs-url.com)
 
-## 🎯 Roadmap
+## 🎯 Future Goals for this Project
 
 ### **Version 2.0 (Planned)**
 - [ ] Real-time chat updates with WebSockets
@@ -342,11 +333,3 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [ ] Mobile app development
 - [ ] Enterprise features and SSO
 
----
-
-**Built with ❤️ by Shohruzbek **
-
-*This project demonstrates advanced web development skills, AI integration, security best practices, and production deployment expertise.*
-=======
-
->>>>>>> refs/remotes/origin/main
