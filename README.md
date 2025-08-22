@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Data Analysis AI Web Application
 
 A production-ready, AI-powered data analysis web application built with Django that provides intelligent insights, dynamic chart generation, and secure file processing capabilities.
