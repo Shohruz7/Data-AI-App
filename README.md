@@ -9,9 +9,6 @@ A production-ready, AI-powered data analysis web application built with Django t
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5--turbo-purple.svg)
 ![Heroku](https://img.shields.io/badge/Deploy-Heroku-orange.svg)
 
-## 🚀 Live Demo
-
-**Deployed on Heroku**: [Your App URL Here]
 
 ## ✨ Features
 
