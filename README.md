@@ -6,42 +6,9 @@ A production-ready, AI-powered data analysis web application built with Django t
 ![Django](https://img.shields.io/badge/Django-4.2.7-green.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-blue.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5--turbo-purple.svg)
-![Heroku](https://img.shields.io/badge/Deploy-Heroku-orange.svg)
 
 
-## ✨ Features
-
-### 🔐 **Authentication & Security**
-- **User Registration & Login**: Secure authentication system with custom user model
-- **Session Management**: Persistent chat sessions with AI-generated titles
-- **CSRF Protection**: Built-in CSRF token validation
-- **Input Sanitization**: Comprehensive validation and sanitization
-
-### 📊 **Data Analysis & AI**
-- **CSV File Processing**: Intelligent data analysis with OpenAI GPT-3.5-turbo
-- **Dynamic Chart Generation**: Automatic chart type inference and creation
-- **Multi-Format Support**: Bar, line, scatter, histogram, box, and pie charts
-- **AI-Powered Insights**: Natural language analysis and pattern recognition
-
-### 💬 **Interactive Chat System**
-- **Multi-Chat Sessions**: Create, save, and manage multiple analysis sessions
-- **AI-Generated Titles**: Intelligent chat naming based on uploaded data
-- **Persistent History**: Database-backed chat persistence across sessions
-- **Real-time Updates**: AJAX-powered interface without page refreshes
-
-### 🛡️ **Enterprise Security Features**
-- **File Upload Validation**: Comprehensive CSV validation (type, size, content)
-- **Security Headers**: HSTS, XSS protection, content type sniffing
-- **HTTPS Enforcement**: Automatic SSL redirect in production
-- **Rate Limiting**: Built-in protection against abuse
-
-### 📱 **Modern UI/UX**
-- **Responsive Design**: Mobile-friendly interface with modern styling
-- **Dark Theme**: Professional navy blue aesthetic
-- **Intuitive Navigation**: Clean, user-friendly interface
-- **Accessibility**: Proper semantic HTML and ARIA labels
-
-## 🏗️ Architecture & Technology Stack
+## Technology Stack
 
 ### **Backend Framework**
 - **Django 4.2.7**: Robust web framework with built-in security
@@ -55,26 +22,19 @@ A production-ready, AI-powered data analysis web application built with Django t
 - **Matplotlib**: Professional chart generation and visualization
 - **NumPy**: Numerical computing and array operations
 
-### **Production Infrastructure**
-- **Whitenoise**: Static file serving with compression and caching
-- **Gunicorn**: Production-grade WSGI server
-- **Heroku**: Cloud platform for deployment
-- **Environment Variables**: Secure configuration management
-
 ### **Frontend Technologies**
 - **HTML5**: Semantic markup and modern web standards
 - **CSS3**: Responsive design with Flexbox and Grid
 - **JavaScript (ES6+)**: AJAX, DOM manipulation, and dynamic updates
 - **Bootstrap**: Responsive CSS framework (optional enhancement)
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Python 3.11+**
-- **PostgreSQL** (for production)
 - **OpenAI API Key**
 - **Git**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. **Clone the Repository**
 ```bash
@@ -117,7 +77,7 @@ python manage.py runserver
 
 Visit `http://127.0.0.1:8000/` to see your application!
 
-## 🔧 Configuration
+## Configuration
 
 ### **Environment Variables**
 
@@ -149,70 +109,7 @@ Your application enforces strict file validation:
 - **Data Types**: Must contain numeric columns for analysis
 - **Encoding**: UTF-8 encoding required
 
-## 🚀 Production Deployment
-
-### **Heroku Deployment**
-
-1. **Install Heroku CLI**
-   ```bash
-   brew install heroku/brew/heroku  # macOS
-   ```
-
-2. **Login to Heroku**
-   ```bash
-   heroku login
-   ```
-
-3. **Create App & Add Database**
-   ```bash
-   heroku create your-app-name
-   heroku addons:create heroku-postgresql:mini
-   ```
-
-4. **Set Environment Variables**
-   ```bash
-   heroku config:set SECRET_KEY="your-production-secret-key"
-   heroku config:set DEBUG="False"
-   heroku config:set OPENAI_API_KEY="your-openai-api-key"
-   ```
-
-5. **Deploy**
-   ```bash
-   git push heroku main
-   heroku run python manage.py migrate
-   heroku run python manage.py collectstatic --noinput
-   ```
-
-6. **Open Your App**
-   ```bash
-   heroku open
-   ```
-
-### **Alternative Deployment Options**
-
-- **Docker**: Containerized deployment
-- **AWS**: EC2 with RDS and S3
-- **DigitalOcean**: App Platform or Droplets
-- **VPS**: Custom server setup
-
-## 🧪 Testing
-
-### **Run Django Checks**
-```bash
-python manage.py check
-```
-
-### **Run Tests**
-```bash
-python manage.py test
-```
-
-### **Static File Collection**
-```bash
-python manage.py collectstatic --noinput
-```
-
-## 📁 Structure
+## Structure
 
 ```
 dataai/
@@ -301,19 +198,6 @@ If you would like to contribute!
 - Write comprehensive tests for new features
 - Update documentation for any changes
 - Ensure all tests pass before submitting
-
-## 🙏 Big thanks
-
-- **OpenAI** for providing the GPT-3.5-turbo API
-- **Django** community for the excellent web framework
-- **Heroku** for the deployment platform
-
-## 📞 Support & Contact
-
-- **GitHub Issues**: [Create an issue](https://github.com/shohruz7/data-ai-app/issues)
-- **Email**: shohruzbek.abdumuminov19@gmail.com
-
-## 🎯 Future Goals for this Project
 
 ### **Version 2.0 (Planned)**
 - [ ] Real-time chat updates with WebSockets
