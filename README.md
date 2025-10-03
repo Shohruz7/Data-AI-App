@@ -2,12 +2,6 @@
 
 A production-ready, AI-powered data analysis web application built with Django that provides intelligent insights, dynamic chart generation, and secure file processing capabilities.
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
-![Django](https://img.shields.io/badge/Django-4.2.7-green.svg)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-blue.svg)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5--turbo-purple.svg)
-
-
 ## Technology Stack
 
 ### **Backend Framework**
@@ -97,18 +91,6 @@ OPENAI_API_KEY=your-openai-api-key-here
 # DATABASE_URL=postgres://username:password@host:port/database
 ```
 
-### **File Upload Requirements**
-
-Your application enforces strict file validation:
-
-- **File Type**: Only `.csv` files accepted
-- **File Size**: Maximum 10MB per file
-- **Content**: Must contain actual data (not empty)
-- **Rows**: Maximum 100,000 rows
-- **Columns**: Maximum 100 columns
-- **Data Types**: Must contain numeric columns for analysis
-- **Encoding**: UTF-8 encoding required
-
 ## Structure
 
 ```
@@ -137,79 +119,4 @@ dataai/
 ├── runtime.txt              # Python version specification
 └── manage.py                # Django management script
 ```
-
-## 🔒 Security 
-
-### **File Upload Security**
-- **Type Validation**: Strict CSV file type checking
-- **Size Limits**: Configurable file size restrictions
-- **Content Validation**: Ensures uploaded files contain valid data
-- **Malware Protection**: File content analysis and validation
-
-### **Application Security**
-- **HTTPS Enforcement**: Automatic SSL redirect in production
-- **Security Headers**: Comprehensive security header configuration
-- **CSRF Protection**: Built-in CSRF token validation
-- **Session Security**: Secure session configuration
-- **Input Validation**: Comprehensive input sanitization
-
-### **Data Protection**
-- **User Isolation**: Users can only access their own data
-- **Secure Storage**: Encrypted file storage and database
-- **Audit Logging**: Comprehensive logging for security monitoring
-
-## 📊 Performance 
-
-### **Static File Optimization**
-- **Whitenoise**: Efficient static file serving
-- **Compression**: Automatic file compression
-- **Caching**: Intelligent caching strategies
-- **CDN Ready**: Easy integration with CDN services
-
-### **Database Optimization**
-- **Connection Pooling**: Optimized database connections
-- **Query Optimization**: Efficient database queries
-- **Indexing**: Strategic database indexing
-- **Migration Management**: Smooth database schema updates
-
-## 🚀 API 
-
-### **OpenAI Integration**
-- **GPT-3.5-turbo**: Advanced language model for analysis
-- **Rate Limiting**: Built-in API rate limiting
-- **Error Handling**: Comprehensive error handling and fallbacks
-- **Timeout Management**: Configurable API timeouts
-
-### **Chart Generation API**
-- **Dynamic Charts**: Automatic chart type selection
-- **Multiple Formats**: Support for various chart types
-- **Customization**: Configurable chart parameters
-- **Export Options**: Chart export capabilities
-
-If you would like to contribute!
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-4. **Push to the branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
-
-### **Development Guidelines**
-- Follow PEP 8 Python style guidelines
-- Write comprehensive tests for new features
-- Update documentation for any changes
-- Ensure all tests pass before submitting
-
-### **Version 2.0 (Planned)**
-- [ ] Real-time chat updates with WebSockets
-- [ ] Advanced chart customization options
-- [ ] Data export functionality (Excel, PDF)
-- [ ] Team collaboration features
-- [ ] API endpoints for external integrations
-
-### **Version 3.0 (Future)**
-- [ ] Machine learning model integration
-- [ ] Advanced analytics and reporting
-- [ ] Multi-language support
-- [ ] Mobile app development
-- [ ] Enterprise features and SSO
 
